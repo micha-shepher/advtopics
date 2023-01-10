@@ -38,7 +38,7 @@ class Populate:
         """
         self.bdates = list()
         for iter in range(6):
-            delta = datetime.timedelta(days=5)
+            delta = datetime.timedelta(days=iter*5+1)
             for date in self.birthdates:
                 self.bdates.append(datetime.datetime.strptime(date, '%b. %d, %Y')+delta)
 
@@ -48,7 +48,7 @@ class Populate:
         :return: Nothing
         """
         self.fix_dates()
-        inc = 1
+        inc = 2
         for bank in self.banks:
             if not Bank.objects.filter(name=bank).exists():
                 b = Bank(name=bank, number=inc, country='NL')
@@ -69,7 +69,7 @@ class Populate:
                     else:
                         c = Client(name=name, birthday=bday)
                         c.save()
-                        a = Account(client=c, branch=br, balance=randint(-1000, 100000),
+                        a = Account(client=c, branch=br, balance=randint(-1000, 10000),
                                     max_withdrawal=randint(1,5)*1000, max_debt=randint(1,5)*1000)
                         a.save()
 
