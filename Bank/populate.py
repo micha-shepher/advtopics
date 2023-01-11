@@ -1,5 +1,10 @@
 from random import randint
 
+import os
+from django import setup
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Bank.settings')
+setup()
+
 from banks.models import Bank, Branch, Client, Account
 
 import datetime
@@ -21,7 +26,7 @@ class Populate:
              'Ernesto Tate', 'Flora Norman', 'Kristy Carlson', 'Charles Maldonado', 'Roy Swanson', 'Daryl Chavez',
              'Myrtle Harris', 'Lucas Boyd', 'Jacquelyn Henderson', 'Kara Leonard', 'Andy Morton', 'Lynette Foster')
     birthdates = ('Feb. 20, 1985',
-                    'Sep. 6, 1960',
+                    'Sep. 6, 2003',
                     'Oct. 15, 1943',
                     'Nov. 15, 1944',
                     'Aug. 30, 1952',

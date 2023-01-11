@@ -1,5 +1,5 @@
 import operator
-from datetime import date, timedelta
+from datetime import date
 
 import os
 import django
