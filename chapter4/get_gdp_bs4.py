@@ -37,7 +37,7 @@ class GDP:
                     result['gdp'] = col.text
                 elif i == 6:
                     result['growth'] = col.text
-            if len(result) > 0:
+            if len(result) == 4:
                 reply.append(result)
         return reply
 
