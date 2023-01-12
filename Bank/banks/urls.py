@@ -15,6 +15,4 @@ router.register(r'accounts', views.AccountViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('banks/', views.bank_list),
-    path('banks/<int:pk>/', views.bank_detail)
 ]

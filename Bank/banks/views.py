@@ -35,7 +35,7 @@ class BankViewSet(viewsets.ModelViewSet):
 
 class BranchViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows banks to be viewed or edited.
+    API endpoint that allows branches to be viewed or edited.
     """
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
@@ -44,7 +44,7 @@ class BranchViewSet(viewsets.ModelViewSet):
 
 class ClientViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows banks to be viewed or edited.
+    API endpoint that allows clients to be viewed or edited.
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -53,7 +53,7 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows banks to be viewed or edited.
+    API endpoint that allows accounts to be viewed or edited.
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
