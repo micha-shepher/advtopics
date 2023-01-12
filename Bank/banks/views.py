@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.parsers import JSONParser
 
-from .models import Bank
+from .models import Bank, Branch, Client, Account
 from .serializers import (UserSerializer, GroupSerializer, BankSerializer,
                           AccountSerializer, ClientSerializer, BranchSerializer)
 
@@ -27,6 +27,41 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BankViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows banks to be viewed or edited.
+    """
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class BranchViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows banks to be viewed or edited.
+    """
+    queryset = Branch.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ClientViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows banks to be viewed or edited.
+    """
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows banks to be viewed or edited.
+    """
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 @csrf_exempt
