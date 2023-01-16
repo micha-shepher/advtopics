@@ -1,3 +1,4 @@
+import json
 import locale
 import webbrowser
 from typing import List, Dict
@@ -45,6 +46,15 @@ class GetGdp:
             print(f"could not get json file from url")
             return response.status_code
 
+    def save_gdp_json(self, table: List[Dict]):
+        """
+        save table as json file
+        :param table:
+        :return: None
+        """
+        with open('/tmp/gdp.json', 'w') as f:
+            json.dump(table, f)
+
     def render_gdp_table(self, table: List[Dict]) -> str:
         """
         render the json table as an HTML table
@@ -73,7 +83,11 @@ class GetGdp:
         self.browser.open_new_tab(thehtml)
 
 
+
 if __name__ == '__main__':
     gdp_processor = GetGdp()
     js = gdp_processor.get_gdp_json()
-    gdp_processor.save_gdp_html(gdp_processor.render_gdp_table(js))
+    gdp_processor.save_gdp_json(js)
+
+
+    # gdp_processor.save_gdp_html(gdp_processor.render_gdp_table(js))
