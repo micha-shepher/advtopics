@@ -8,7 +8,7 @@ from .serializers import (CountrySerializer,
 
 class CountryViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows countries to be viewed or edited.
     """
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
@@ -17,7 +17,7 @@ class CountryViewSet(viewsets.ModelViewSet):
 
 class RegionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows regions to be viewed or edited.
     """
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
@@ -27,7 +27,7 @@ class RegionViewSet(viewsets.ModelViewSet):
 
 class IndicatorViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows indicators to be viewed or edited.
     """
     queryset = Indicator.objects.all()
     serializer_class = IndicatorSerializer
@@ -37,7 +37,7 @@ class IndicatorViewSet(viewsets.ModelViewSet):
 
 class ValueViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows gdp and population to be viewed or edited.
     """
     queryset = Gdp.objects.all().order_by('country', 'indicator')
     serializer_class = ValueSerializer
