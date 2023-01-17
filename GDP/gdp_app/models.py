@@ -18,10 +18,10 @@ class Country(models.Model):
 
 
 class Indicator(models.Model):
-    name = models.CharField(max_length=50)
+    desc = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return self.desc
 
 
 class Gdp(models.Model):

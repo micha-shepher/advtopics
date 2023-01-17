@@ -71,9 +71,13 @@ class Populate:
                 i.save()
 
         # populate gdp & population
+        counter = 0
         for val in self.values:
             if Country.objects.filter(abbr=val['Country Code']).exists():
                 country = Country.objects.get(abbr=val['Country Code'])
+                if counter % 100 == 0:
+                    print(f'adding value {counter}, {val}')
+                counter += 1
                 ind = Indicator.objects.get(name='GDP')
                 pop = Indicator.objects.get(name='Population')
                 # gdp
