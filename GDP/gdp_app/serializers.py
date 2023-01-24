@@ -18,7 +18,12 @@ class IndicatorSerializer(serializers.ModelSerializer):
         model = Indicator
         fields = '__all__'
 
-class ValueSerializer(serializers.ModelSerializer):
+class ValueSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         fields = '__all__'
         model = Gdp
+
+class PopulationSerializer(serializers.Serializer):
+    country = serializers.CharField()
+    region = serializers.CharField()
+    population = serializers.DecimalField(decimal_places=0, max_digits=12)

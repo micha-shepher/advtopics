@@ -11,6 +11,7 @@ router.register(r'indicators', views.IndicatorViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls)),
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('countrylist/', views.CountryViewSet.as_view({'get': 'list'}), name='country-list'),
 ]

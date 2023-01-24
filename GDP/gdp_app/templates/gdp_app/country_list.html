@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Country list</title>
+</head>
+<body>
+<h1>Countries</h1>
+<ul>
+{% for country in object_list %}
+    <li>{{ country.abbr }}: {{ country.name }} - {{ country.region.name }}</li>
+{% empty %}
+    <li>No countries yet.</li>
+{% endfor %}
+</ul>
+</body>
+</html>

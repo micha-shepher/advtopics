@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.response import Response
 
 from .models import Country, Region, Gdp, Indicator
 from .serializers import (CountrySerializer,
@@ -13,6 +14,11 @@ class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     permission_classes = [permissions.IsAuthenticated]
+    template_name = 'country_list.html'
+
+    def get(self, request):
+        queryset = self.queryset
+        return Response({'countries': queryset})
 
 
 class RegionViewSet(viewsets.ModelViewSet):
@@ -42,4 +48,6 @@ class ValueViewSet(viewsets.ModelViewSet):
     queryset = Gdp.objects.all().order_by('country', 'indicator')
     serializer_class = ValueSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
 
