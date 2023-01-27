@@ -9,7 +9,7 @@ from gdp_app.models import Gdp, Indicator, Country
 CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader("./echartsdemo/templates"))
 
 from pyecharts import options as opts
-from pyecharts.charts import Bar, Scatter
+from pyecharts.charts import Bar, Scatter, Parallel
 
 from pyecharts.components import Table
 from pyecharts.options import ComponentTitleOpts
@@ -119,3 +119,33 @@ def pop_gdp_scatter(request, year=2010):
 
     return HttpResponse(c.render_embed())
 
+def pop_gdp_parallel(request, country_name='NL', fromyear=2010, toyear=2020):
+    """
+    create a parallel graph of a certain country's gdp in a year range
+    :param request: the request
+    :param country_name: the country for which we want the graph
+    :param fromyear:
+    :param toyear:
+    :return: HttpResponse containing echarts graph
+    """
+    country = Country.objects.get(name=country_name)
+    gdp = Gdp.objects.filter(country=country, indicator__desc='GDP',
+                             year__gte=fromyear, year__lte=toyear)
+    data = [
+        [1, 2, 3, 5, 4, 5, 10, "good"],
+        [1, 2, 3, 25, 4, 15, 11, "good"],
+        [1, 2, 3, 5, 24, 15, 12, "good"],
+        [13, 2, 3, 5, 4, 5, 13, "good"],
+        [1, 2, 3, 25, 24, 15, 14, "good"],
+        [1, 2, 13, 5, 4, 5, 15, "good"],
+    ]
+    schema = []
+    for i, year in enumerate(range(fromyear, toyear+1)):
+        if gdp.filter(year=year).count() > 0:
+            schema.append(dict(dim=i, name=str(year)))
+    c = (
+        Parallel()
+        .add_schema(schema)
+        .add("parallel", data)
+    )
+    return HttpResponse(c.render_embed())
