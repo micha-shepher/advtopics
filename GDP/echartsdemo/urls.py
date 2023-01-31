@@ -8,4 +8,6 @@ urlpatterns = [
     path('popgdp', views.pop_gdp, name='popgdp'),
     path('popgdp/<int:year>', views.pop_gdp, name='popgdpyear'),
     path('popgdpscatter/<int:year>', views.pop_gdp_scatter, name='popgdpscatter'),
+    path('popgdpparallel/<str:country_code>/<int:fromyear>/<int:toyear>',
+         views.pop_gdp_parallel, name='popgdpparallel'),
 ]

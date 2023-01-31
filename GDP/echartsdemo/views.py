@@ -119,33 +119,52 @@ def pop_gdp_scatter(request, year=2010):
 
     return HttpResponse(c.render_embed())
 
-def pop_gdp_parallel(request, country_name='NL', fromyear=2010, toyear=2020):
+def pop_gdp_parallel(request, country_code='NLD', fromyear=2010, toyear=2020):
     """
     create a parallel graph of a certain country's gdp in a year range
     :param request: the request
-    :param country_name: the country for which we want the graph
+    :param country_code: the country for which we want the graph
     :param fromyear:
     :param toyear:
     :return: HttpResponse containing echarts graph
     """
-    country = Country.objects.get(name=country_name)
-    gdp = Gdp.objects.filter(country=country, indicator__desc='GDP',
+    countries = country_code.split(',')
+    gdp = Gdp.objects.filter(country__abbr__in=countries, indicator__desc='GDP',
                              year__gte=fromyear, year__lte=toyear)
-    data = [
-        [1, 2, 3, 5, 4, 5, 10, "good"],
-        [1, 2, 3, 25, 4, 15, 11, "good"],
-        [1, 2, 3, 5, 24, 15, 12, "good"],
-        [13, 2, 3, 5, 4, 5, 13, "good"],
-        [1, 2, 3, 25, 24, 15, 14, "good"],
-        [1, 2, 13, 5, 4, 5, 15, "good"],
-    ]
     schema = []
+    data = []
     for i, year in enumerate(range(fromyear, toyear+1)):
         if gdp.filter(year=year).count() > 0:
             schema.append(dict(dim=i, name=str(year)))
+    for country in countries:
+        d = []
+        gdp_country = gdp.filter(country__abbr=country, indicator__desc='GDP',
+                                 year__gte=fromyear, year__lte=toyear)
+        for year in range(fromyear, toyear+1):
+            try:
+                d.append(gdp_country.get(year=year).value / 1000000000)
+            except Gdp.DoesNotExist:
+                print(f'{country} does not have gdp for {year}')
+        d.append(country)
+        data.append(d)
     c = (
         Parallel()
         .add_schema(schema)
-        .add("parallel", data)
     )
+    for country in data:
+        c.add(country[-1], data=country[:-1])
+
     return HttpResponse(c.render_embed())
+
+def pop_gdp_stacked_line(request, country_code = 'NLD', fromyear = 2010, toyear = 2020):
+    """
+    create a parallel graph of a certain country's gdp in a year range
+    :param request: the request
+    :param country_code: the country for which we want the graph
+    :param fromyear:
+    :param toyear:
+    :return: HttpResponse containing echarts graph
+    """
+    countries = country_code.split(',')
+    gdp = Gdp.objects.filter(country__abbr__in=countries, indicator__desc='GDP',
+    year__gte = fromyear, year__lte = toyear)
